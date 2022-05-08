@@ -11,8 +11,11 @@ private:
     unsigned month;
     unsigned day;
 
+    static bool isLeap(unsigned year);
+    static bool validDate(unsigned year, unsigned month, unsigned day);
+
 public:
-    Date(unsigned year, unsigned month, unsigned day) : year(year), month(month), day(day){};
+    Date(unsigned year = 2022, unsigned month = 5, unsigned day = 8);
 
     unsigned getYear() const { return year; }
     unsigned getMonth() const { return month; }
