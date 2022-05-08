@@ -4,23 +4,16 @@
 
 #include "Room.hpp"
 
-void Room::validateRoom()
-{
-    assert(this->roomId != 0);
-    assert(this->bedCount != 0);
+bool Room::validRoom(unsigned roomId, unsigned bedCount) {
+    return roomId != 0 && bedCount != 0;
 }
 
-void Room::write(std::fstream &bfs)
+void Room::validateRoom() const
 {
-    validateRoom();
-    bfs.seekp(0, std::ios_base::end);
-    bfs.write((char const *)this, sizeof(Room));
+    assert(validRoom(roomId, bedCount));
 }
 
-void Room::read(std::fstream &bfs, std::streampos pos)
-{
-    bfs.seekg(pos);
-    bfs.read((char *)this, sizeof(Room));
+Room::Room(unsigned roomId, unsigned bedCount) : roomId(roomId), bedCount(bedCount){
     validateRoom();
 }
 
@@ -31,5 +24,5 @@ std::istream &operator>>(std::istream &is, Room &room)
 
 std::ostream &operator<<(std::ostream &os, Room const &room)
 {
-    return os << room.getRoomId() << ' ' << room.getBedCount() << '\n';
+    return os << room.getRoomId() << ' ' << room.getBedCount();
 }

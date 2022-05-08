@@ -10,20 +10,17 @@ class Room
     unsigned roomId;
     unsigned bedCount;
 
-    void validateRoom();
+    static bool validRoom(unsigned roomId, unsigned bedCount);
+
+    void validateRoom() const;
 
 public:
-    Room(unsigned roomId = 0, unsigned bedCount = 0) : roomId(roomId), bedCount(bedCount){};
+    Room(unsigned roomId = 0, unsigned bedCount = 0);
 
     unsigned getRoomId() const { return roomId; }
     unsigned getBedCount() const { return bedCount; }
 
     friend std::istream &operator>>(std::istream &is, Room &room);
-
-    void read(std::fstream &bfs, std::streampos pos);
-
-    // Write method for populating the rooms.bin file for testing purposes
-    void write(std::fstream &bfs);
 };
 
 std::ostream &operator<<(std::ostream &os, Room const &room);
