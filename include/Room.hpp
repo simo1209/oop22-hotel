@@ -11,6 +11,8 @@ class Room
     unsigned bedCount;
 
 public:
+    Room(unsigned roomId, unsigned bedCount) : roomId(roomId), bedCount(bedCount){};
+
     unsigned getRoomId() const { return roomId; }
     unsigned getBedCount() const { return bedCount; }
 
