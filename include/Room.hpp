@@ -14,12 +14,14 @@ public:
     unsigned getRoomId() const { return roomId; }
     unsigned getBedCount() const { return bedCount; }
 
-    friend std::istream& operator>>(std::istream &is, Room & room);
+    friend std::istream &operator>>(std::istream &is, Room &room);
 
-    void write(std::fstream &bfs) const;
     void read(std::fstream &bfs, std::streampos pos);
+
+    // Write method for populating the rooms.bin file for testing purposes
+    void write(std::fstream &bfs) const;
 };
 
-std::ostream& operator<<(std::ostream &os, Room const &room);
+std::ostream &operator<<(std::ostream &os, Room const &room);
 
 #endif
