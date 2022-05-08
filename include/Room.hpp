@@ -10,8 +10,10 @@ class Room
     unsigned roomId;
     unsigned bedCount;
 
+    void validateRoom();
+
 public:
-    Room(unsigned roomId, unsigned bedCount) : roomId(roomId), bedCount(bedCount){};
+    Room(unsigned roomId = 0, unsigned bedCount = 0) : roomId(roomId), bedCount(bedCount){};
 
     unsigned getRoomId() const { return roomId; }
     unsigned getBedCount() const { return bedCount; }
@@ -21,7 +23,7 @@ public:
     void read(std::fstream &bfs, std::streampos pos);
 
     // Write method for populating the rooms.bin file for testing purposes
-    void write(std::fstream &bfs) const;
+    void write(std::fstream &bfs);
 };
 
 std::ostream &operator<<(std::ostream &os, Room const &room);
