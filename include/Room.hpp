@@ -12,10 +12,8 @@ class Room
 
     static bool validRoom(unsigned roomId, unsigned bedCount);
 
-    void validateRoom() const;
-
 public:
-    Room(unsigned roomId = 0, unsigned bedCount = 0);
+    Room(unsigned roomId = 0, unsigned bedCount = 0) : roomId(roomId), bedCount(bedCount){};
 
     unsigned getRoomId() const { return roomId; }
     unsigned getBedCount() const { return bedCount; }

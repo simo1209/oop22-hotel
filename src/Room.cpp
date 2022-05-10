@@ -4,22 +4,16 @@
 
 #include "Room.hpp"
 
-bool Room::validRoom(unsigned roomId, unsigned bedCount) {
-    return roomId != 0 && bedCount != 0;
-}
-
-void Room::validateRoom() const
+bool Room::validRoom(unsigned roomId, unsigned bedCount)
 {
-    assert(validRoom(roomId, bedCount));
-}
-
-Room::Room(unsigned roomId, unsigned bedCount) : roomId(roomId), bedCount(bedCount){
-    validateRoom();
+    return roomId != 0 && bedCount != 0;
 }
 
 std::istream &operator>>(std::istream &is, Room &room)
 {
-    return (is >> room.roomId >> room.bedCount);
+    is >> room.roomId >> room.bedCount;
+    assert(room.validRoom(room.roomId, room.bedCount));
+    return is;
 }
 
 std::ostream &operator<<(std::ostream &os, Room const &room)
