@@ -1,22 +1,26 @@
 #include <cstring>
+#include <assert.h>
 
 #include "Reservation.hpp"
 
-Reservation::Reservation(){
+Reservation::Reservation()
+{
     setNote("");
-    setReservator("");
+    setReservatorName("");
 }
 
-Reservation::Reservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservator) : start(start), end(end), roomId(roomId)
+Reservation::Reservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName) : start(start), end(end), roomId(roomId)
 {
+    assert(start < end);
+    assert(roomId != 0);
     setNote(note);
-    setReservator(reservator);
+    setReservatorName(reservatorName);
 }
 
 Reservation::~Reservation()
 {
     delete[] note;
-    delete[] reservator;
+    delete[] reservatorName;
 }
 
 void Reservation::setNote(char const *note)
@@ -26,19 +30,19 @@ void Reservation::setNote(char const *note)
     this->note[MAX_NOTE_LEN - 1] = '\0';
 }
 
-void Reservation::setReservator(char const *reservator)
+void Reservation::setReservatorName(char const *reservatorName)
 {
-    this->reservator = new char[MAX_RESERVATOR_LEN];
-    strncpy(this->reservator, reservator, MAX_RESERVATOR_LEN);
-    this->reservator[MAX_RESERVATOR_LEN - 1] = '\0';
+    this->reservatorName = new char[MAX_RESERVATOR_NAME_LEN];
+    strncpy(this->reservatorName, reservatorName, MAX_RESERVATOR_NAME_LEN);
+    this->reservatorName[MAX_RESERVATOR_NAME_LEN - 1] = '\0';
 }
 
 std::istream &operator>>(std::istream &is, Reservation &reservation)
 {
-    return (is >> reservation.start >> reservation.end >> reservation.roomId).ignore().get(reservation.note, MAX_NOTE_LEN).get(reservation.reservator, MAX_RESERVATOR_LEN);
+    return (is >> reservation.start >> reservation.end >> reservation.roomId).ignore().get(reservation.note, MAX_NOTE_LEN).get(reservation.reservatorName, MAX_RESERVATOR_NAME_LEN);
 }
 
 std::ostream &operator<<(std::ostream &os, Reservation const &reservation)
 {
-    return os << reservation.getStart() << ' ' << reservation.getEnd() << ' ' << reservation.getRoomId() << ' ' << reservation.getNote() << ' ' << reservation.getReservator();
+    return os << reservation.getStart() << ' ' << reservation.getEnd() << ' ' << reservation.getRoomId() << ' ' << reservation.getNote() << ' ' << reservation.getReservatorName();
 }

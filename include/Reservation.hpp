@@ -5,7 +5,7 @@
 #define __RESERVATION_HPP
 
 const size_t MAX_NOTE_LEN = 100;
-const size_t MAX_RESERVATOR_LEN = 100;
+const size_t MAX_RESERVATOR_NAME_LEN = 100;
 
 class Reservation
 {
@@ -14,21 +14,21 @@ private:
     Date end;
     unsigned roomId;
     char *note;
-    char *reservator;
+    char *reservatorName;
 
     void setNote(char const *note);
-    void setReservator(char const *reservator);
+    void setReservatorName(char const *reservatorName);
 
 public:
     Reservation();
-    Reservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservator);
+    Reservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName);
     ~Reservation();
 
     Date getStart() const { return start; }
     Date getEnd() const { return end; }
     unsigned getRoomId() const { return roomId; }
     char const *getNote() const { return note; }
-    char const *getReservator() const { return reservator; }
+    char const *getReservatorName() const { return reservatorName; }
 
     friend std::istream &operator>>(std::istream &is, Reservation &reservation);
 };
