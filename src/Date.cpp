@@ -6,7 +6,7 @@
 
 bool Date::isLeap(unsigned year)
 {
-    return (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 
 bool Date::validDate(unsigned year, unsigned month, unsigned day)
@@ -26,12 +26,18 @@ Date::Date(unsigned year, unsigned month, unsigned day)
     this->day = day;
 }
 
-std::istream &operator>>(std::istream &is, Date &date)
+bool operator<(Date const &left, Date const &right)
+{
+    return left.getYear() < right.getYear() || (left.getYear() == right.getYear() && (left.getMonth() < right.getMonth() || (left.getMonth() == right.getMonth() && left.getDay() < right.getDay())));
+}
+
+std::istream &
+operator>>(std::istream &is, Date &date)
 {
     return (is >> date.year >> date.month >> date.day);
 }
 
 std::ostream &operator<<(std::ostream &os, Date const &date)
 {
-    return os << date.getYear() << '-' << date.getMonth() << '-' << date.getDay() << '\n';
+    return os << date.getYear() << ' ' << date.getMonth() << ' ' << date.getDay();
 }

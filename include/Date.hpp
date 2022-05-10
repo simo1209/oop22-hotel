@@ -21,6 +21,8 @@ public:
     unsigned getMonth() const { return month; }
     unsigned getDay() const { return day; }
 
+    friend bool operator<(Date const &left, Date const &right);
+
     friend std::istream &operator>>(std::istream &is, Date &date);
 };
 
