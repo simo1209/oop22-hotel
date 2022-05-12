@@ -22,6 +22,9 @@ public:
     unsigned getDay() const { return day; }
 
     friend bool operator<(Date const &left, Date const &right);
+    friend bool operator>(Date const &left, Date const &right) { return right < left; };
+    friend bool operator<=(Date const &left, Date const &right) { return !(left > right); };
+    friend bool operator>=(Date const &left, Date const &right) { return !(left < right); };
 
     friend std::istream &operator>>(std::istream &is, Date &date);
 };
