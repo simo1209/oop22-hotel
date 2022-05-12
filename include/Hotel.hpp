@@ -13,6 +13,7 @@ protected:
     size_t reservationsCount;
     Reservation *reservations;
 
+    bool hasRoomWithId(unsigned roomId);
     bool isRoomTakenDuringPeriod(Date start, Date end, unsigned roomId);
 
     virtual void loadRooms() = 0;
@@ -23,7 +24,7 @@ public:
     size_t getReservationsCount() {return reservationsCount;}
 
     virtual void createReservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName = "") = 0;
-    // virtual void listFreeRooms(Date &date) = 0;
+    virtual void listFreeRooms(Date &date) = 0;
     // virtual void releaseRoom(unsigned roomId) = 0;
     // virtual void reservationInquiry(Date &start, Date &end) = 0;
     // virtual Room findOpenRoom(Date start, Date end, unsigned bedCount) = 0;

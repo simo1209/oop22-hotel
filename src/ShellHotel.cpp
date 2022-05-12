@@ -76,6 +76,12 @@ void ShellHotel::loadReservations()
 
 void ShellHotel::createReservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName)
 {
+    if (!hasRoomWithId(roomId))
+    {
+        std::cout << "Room with room number{" << roomId << "} doesn't exist.\n";
+        return;
+    }
+
     if (isRoomTakenDuringPeriod(start, end, roomId))
     {
         std::cout << "Room is taken during supplied period.\n";
@@ -101,9 +107,26 @@ void ShellHotel::createReservation(Date &start, Date &end, unsigned roomId, char
     loadReservations();
 }
 
-// void listFreeRooms(Date &date)
-// {
-// }
+void ShellHotel::listFreeRooms(Date &date)
+{
+    for (unsigned i = 0; i < roomsCount; ++i)
+    {
+        bool isFree = true;
+
+        for (unsigned j = 0; isFree && j < reservationsCount; ++j)
+        {
+            if (isRoomTakenDuringPeriod(date, date, rooms[i].getRoomId()))
+            {
+                isFree = false;
+            }
+        }
+        
+        if (isFree)
+        {
+            std::cout << "Room {" << rooms[i].getRoomId() << "} is free.\n";
+        }
+    }
+}
 
 // void releaseRoom(unsigned roomId)
 // {
