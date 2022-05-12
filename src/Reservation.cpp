@@ -39,7 +39,7 @@ void Reservation::setReservatorName(char const *reservatorName)
 
 std::istream &operator>>(std::istream &is, Reservation &reservation)
 {
-    return (is >> reservation.start >> reservation.end >> reservation.roomId).ignore().get(reservation.note, MAX_NOTE_LEN).get(reservation.reservatorName, MAX_RESERVATOR_NAME_LEN);
+    return (is >> reservation.start >> reservation.end >> reservation.roomId).ignore().get(reservation.note, MAX_NOTE_LEN, ' ').ignore().get(reservation.reservatorName, MAX_RESERVATOR_NAME_LEN, '\n');
 }
 
 std::ostream &operator<<(std::ostream &os, Reservation const &reservation)
