@@ -1,6 +1,7 @@
 #include <cstring>
 #include <fstream>
 #include <assert.h>
+#include <cstdio>
 
 #include "ShellHotel.hpp"
 
@@ -120,7 +121,7 @@ void ShellHotel::listFreeRooms(Date &date)
                 isFree = false;
             }
         }
-        
+
         if (isFree)
         {
             std::cout << "Room {" << rooms[i].getRoomId() << "} is free.\n";
@@ -132,9 +133,43 @@ void ShellHotel::listFreeRooms(Date &date)
 // {
 // }
 
-// void reservationInquiry(Date &start, Date &end)
-// {
-// }
+void ShellHotel::reservationInquiry(Date &periodStart, Date &periodEnd)
+{
+    unsigned reportFileNameLength = 22; // report-YYYY-MM-DD.txt is with length 21 and 1 terminating symbol
+    const char *reportFormat = "report-%04d-%02d-%02d.txt";
+    char *reportFileName = new char[reportFileNameLength];
+    std::snprintf(reportFileName, reportFileNameLength, reportFormat, periodStart.getYear(), periodStart.getMonth(), periodStart.getDay());
+
+    std::fstream reportFile;
+
+    reportFile.open(reportFileName, std::ios::out | std::ios::trunc);    
+
+    assert(reportFile.is_open());
+
+    reportFile << "Room Id,Days Used\n";
+
+    for (unsigned i = 0; i < roomsCount; ++i)
+    {
+        unsigned daysUsed = 0;
+        unsigned roomId = rooms[i].getRoomId();
+
+        for (unsigned j = 0; j < reservationsCount; ++j)
+        {
+            if (roomId == reservations[j].getRoomId() && periodStart < reservations[j].getStart() && reservations[j].getEnd() < periodEnd)
+            {
+                daysUsed += reservations[j].reservationPeriodDays();
+            }
+        }
+
+        if (daysUsed != 0)
+        {
+            reportFile << roomId << ',' << daysUsed << '\n';
+        }
+    }
+
+    reportFile.close();
+    delete[] reportFileName;
+}
 
 // Room findOpenRoom(Date start, Date end, unsigned bedCount)
 // {

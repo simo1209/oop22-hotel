@@ -30,6 +30,8 @@ public:
     char const *getNote() const { return note; }
     char const *getReservatorName() const { return reservatorName; }
 
+    unsigned reservationPeriodDays();
+
     friend std::istream &operator>>(std::istream &is, Reservation &reservation);
 };
 

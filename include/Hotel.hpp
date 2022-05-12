@@ -26,7 +26,7 @@ public:
     virtual void createReservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName = "") = 0;
     virtual void listFreeRooms(Date &date) = 0;
     // virtual void releaseRoom(unsigned roomId) = 0;
-    // virtual void reservationInquiry(Date &start, Date &end) = 0;
+    virtual void reservationInquiry(Date &periodStart, Date &periodEnd) = 0;
     // virtual Room findOpenRoom(Date start, Date end, unsigned bedCount) = 0;
 };
 

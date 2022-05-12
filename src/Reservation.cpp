@@ -37,6 +37,11 @@ void Reservation::setReservatorName(char const *reservatorName)
     this->reservatorName[MAX_RESERVATOR_NAME_LEN - 1] = '\0';
 }
 
+unsigned Reservation::reservationPeriodDays(){
+    // oversimplified days calculation
+    return (end.getYear() - start.getYear()) * 365 + (end.getMonth() - start.getMonth()) * 30 + end.getDay() - start.getDay();
+}
+
 std::istream &operator>>(std::istream &is, Reservation &reservation)
 {
     return (is >> reservation.start >> reservation.end >> reservation.roomId).ignore().get(reservation.note, MAX_NOTE_LEN, ' ').ignore().get(reservation.reservatorName, MAX_RESERVATOR_NAME_LEN, '\n');

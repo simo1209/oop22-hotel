@@ -28,7 +28,7 @@ public:
     void createReservation(Date &start, Date &end, unsigned roomId, char const * note, char const *reservatorName = "NULL");
     void listFreeRooms(Date &date);
     // void releaseRoom(unsigned roomId);
-    // void reservationInquiry(Date &start, Date &end);
+    void reservationInquiry(Date &periodStart, Date &periodEnd);
     // Room findOpenRoom(Date start, Date end, unsigned bedCount);
 };
 
