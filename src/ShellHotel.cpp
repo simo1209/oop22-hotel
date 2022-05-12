@@ -42,7 +42,8 @@ void ShellHotel::setReservationsFileName(char const *reservationsFileName)
     this->reservationsFileName[MAX_FILE_NAME - 1] = '\0';
 }
 
-void ShellHotel::loadRooms(){
+void ShellHotel::loadRooms()
+{
     assert(roomsFile.is_open());
     roomsFile.seekg(0, std::ios::end);
     std::streampos end = roomsFile.tellg();
@@ -59,22 +60,46 @@ void ShellHotel::loadRooms(){
     }
 }
 
-void ShellHotel::loadReservations(){
+void ShellHotel::loadReservations()
+{
     assert(reservationsFile.is_open());
-    
+
     reservationsFile >> reservationsCount;
 
     reservations = new Reservation[reservationsCount];
 
     for (size_t i = 0; !reservationsFile.eof() && i < reservationsCount; i++)
     {
-        reservationsFile >> reservations[i];        
+        reservationsFile >> reservations[i];
     }
 }
 
-// void createReservation(Date &start, Date &end, Room &room, char const *note, char const *reservatorName = "")
-// {
-// }
+void ShellHotel::createReservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName)
+{
+    if (isRoomTakenDuringPeriod(start, end, roomId))
+    {
+        std::cout << "Room is taken during supplied period.\n";
+        return;
+    }
+
+    Reservation reservation(start, end, roomId, note, reservatorName);
+
+    reservationsFile.clear();
+    reservationsFile.seekp(0);
+
+    reservationsFile << ++reservationsCount;
+
+    reservationsFile.seekp(0, std::ios::end);
+
+    reservationsFile << reservation << '\n';
+
+    reservationsFile.flush();
+    reservationsFile.clear();
+
+    delete[] reservations;
+
+    loadReservations();
+}
 
 // void listFreeRooms(Date &date)
 // {
