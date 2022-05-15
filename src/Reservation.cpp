@@ -11,16 +11,42 @@ Reservation::Reservation()
 
 Reservation::Reservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName) : start(start), end(end), roomId(roomId)
 {
-    assert(start < end);
-    assert(roomId != 0);
+    reservationValid();
     setNote(note);
     setReservatorName(reservatorName);
+}
+
+Reservation::Reservation(Reservation const &other) : start(other.start), end(other.end), roomId(other.roomId), note(nullptr), reservatorName(nullptr)
+{
+    reservationValid();
+    setNote(other.note);
+    setReservatorName(other.reservatorName);
+}
+
+Reservation &Reservation::operator=(Reservation const &other)
+{
+    if (this != &other)
+    {
+        setNote(other.note);
+        setReservatorName(other.reservatorName);
+        start = other.start;
+        end = other.end;
+        roomId = other.roomId;
+        reservationValid();
+    }
+    return *this;
 }
 
 Reservation::~Reservation()
 {
     delete[] note;
     delete[] reservatorName;
+}
+
+void Reservation::reservationValid()
+{
+    assert(start < end);
+    assert(roomId != 0);
 }
 
 void Reservation::setNote(char const *note)
@@ -37,7 +63,8 @@ void Reservation::setReservatorName(char const *reservatorName)
     this->reservatorName[MAX_RESERVATOR_NAME_LEN - 1] = '\0';
 }
 
-unsigned Reservation::reservationPeriodDays(){
+unsigned Reservation::reservationPeriodDays()
+{
     // oversimplified days calculation
     return (end.getYear() - start.getYear()) * 365 + (end.getMonth() - start.getMonth()) * 30 + end.getDay() - start.getDay();
 }

@@ -16,11 +16,15 @@ private:
     char *note;
     char *reservatorName;
 
+    void reservationValid();
+
     void setNote(char const *note);
     void setReservatorName(char const *reservatorName);
 
 public:
     Reservation();
+    Reservation(Reservation const &other);
+    Reservation &operator=(Reservation const &other);
     Reservation(Date &start, Date &end, unsigned roomId, char const *note, char const *reservatorName);
     ~Reservation();
 
