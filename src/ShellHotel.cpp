@@ -4,6 +4,7 @@
 #include <cstdio>
 
 #include "ShellHotel.hpp"
+#include "Exceptions.hpp"
 
 ShellHotel::ShellHotel(char const *roomsFileName, char const *reservationsFileName)
 {
@@ -142,7 +143,7 @@ void ShellHotel::reservationInquiry(Date &periodStart, Date &periodEnd)
 
     std::fstream reportFile;
 
-    reportFile.open(reportFileName, std::ios::out | std::ios::trunc);    
+    reportFile.open(reportFileName, std::ios::out | std::ios::trunc);
 
     assert(reportFile.is_open());
 
@@ -171,6 +172,30 @@ void ShellHotel::reservationInquiry(Date &periodStart, Date &periodEnd)
     delete[] reportFileName;
 }
 
-// Room findOpenRoom(Date start, Date end, unsigned bedCount)
-// {
-// }
+void ShellHotel::printOpenRoom(Date &start, Date &end, unsigned bedCount)
+{
+    try
+    {
+        Room r = findOpenRoom(start, end, bedCount);
+        std::cout << "Found room " << r.getRoomId() << " that is free for the period [" << start << "] - [" << end << "] and has [" << r.getBedCount() << "] beds.\n";
+    }
+    catch(...)
+    {
+        std::cout << "No room during period [" << start << "] - [" << end << "] with " << bedCount << " numbers of bed could be found.\n";
+    }
+}
+
+Date ShellHotel::inputDate()
+{
+    unsigned year, month, day;
+
+    std::cin >> year >> month >> day;
+
+    if (!Date::validDate(year, month, day))
+    {
+        throw DateInvalidException();
+    }
+
+    Date d(year, month, day);
+    return d;
+}

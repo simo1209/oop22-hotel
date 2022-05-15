@@ -25,11 +25,14 @@ public:
     ShellHotel(char const *roomsFileName, char const *reservationsFileName);
     ~ShellHotel();
 
-    void createReservation(Date &start, Date &end, unsigned roomId, char const * note, char const *reservatorName = "NULL");
+    void createReservation(Date &start, Date &end, unsigned roomId, char const * note, char const *reservatorName = "<CLOSED>");
     void listFreeRooms(Date &date);
     // void releaseRoom(unsigned roomId);
     void reservationInquiry(Date &periodStart, Date &periodEnd);
-    // Room findOpenRoom(Date start, Date end, unsigned bedCount);
+    void printOpenRoom(Date &start, Date &end, unsigned bedCount = 1);
+
+    Date inputDate();
+
 };
 
 #endif
