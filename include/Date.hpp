@@ -12,7 +12,6 @@ private:
     unsigned day;
 
     static bool isLeap(unsigned year);
-    static bool validDate(unsigned year, unsigned month, unsigned day);
 
 public:
     Date(unsigned year = 2022, unsigned month = 5, unsigned day = 8);
@@ -20,6 +19,8 @@ public:
     unsigned getYear() const { return year; }
     unsigned getMonth() const { return month; }
     unsigned getDay() const { return day; }
+
+    static bool validDate(unsigned year, unsigned month, unsigned day);
 
     friend bool operator<(Date const &left, Date const &right);
     friend bool operator>(Date const &left, Date const &right) { return right < left; };
