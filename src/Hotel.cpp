@@ -1,6 +1,10 @@
-#include "Hotel.hpp"
+#include <assert.h>
 
-bool Hotel::hasRoomWithId(unsigned roomId){
+#include "Hotel.hpp"
+#include "Exceptions.hpp"
+
+bool Hotel::hasRoomWithId(unsigned roomId)
+{
     for (unsigned i = 0; i < roomsCount; ++i)
     {
         if (rooms[i].getRoomId() == roomId)
@@ -8,10 +12,10 @@ bool Hotel::hasRoomWithId(unsigned roomId){
             return true;
         }
     }
-    return false;    
+    return false;
 }
 
-bool Hotel::isRoomTakenDuringPeriod(Date start, Date end, unsigned roomId)
+bool Hotel::isRoomTakenDuringPeriod(Date &start, Date &end, unsigned roomId)
 {
     for (unsigned i = 0; i < reservationsCount; ++i)
     {
@@ -21,4 +25,32 @@ bool Hotel::isRoomTakenDuringPeriod(Date start, Date end, unsigned roomId)
         }
     }
     return false;
+}
+
+Room Hotel::findOpenRoom(Date &start, Date &end, unsigned requiredBedCount)
+{
+    assert(roomsCount > 0);
+
+    bool hasOpenRoom = false;
+    unsigned minRoomId, minBedCount;
+
+    for (unsigned i = 0; i < roomsCount; ++i)
+    {
+        unsigned currentRoomId = rooms[i].getRoomId();
+        unsigned currentBedCount = rooms[i].getBedCount();
+        if (!isRoomTakenDuringPeriod(start, end, currentRoomId) && currentBedCount >= requiredBedCount && (!hasOpenRoom || minBedCount > currentBedCount))
+        {
+            hasOpenRoom = true;
+            minRoomId = currentRoomId;
+            minBedCount = currentBedCount;
+        }
+    }
+
+    if (!hasOpenRoom)
+    {
+        throw NoOpenRoomMatchingCriteriaFoundException();
+    }
+
+    Room r(minRoomId, minBedCount);
+    return r;
 }
