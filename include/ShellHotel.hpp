@@ -43,7 +43,7 @@ class ShellHotel : public Hotel
     /**
      * @brief Мутатор на името на файла за съхранение на резервациите.
      *
-     * @param roomsFileName текстов низ за новото име на файла за съхранение на резервациите
+     * @param reservationsFileName текстов низ за новото име на файла за съхранение на резервациите
      */
     void setReservationsFileName(char const *reservationsFileName);
 
